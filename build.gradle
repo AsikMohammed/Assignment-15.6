@@ -1,0 +1,51 @@
+apply plugin: 'java' //necessary for any java project
+ 
+// Set up group and version info for the artifact
+ 
+group = "com.acadgild.hadoop_wc_gradle"
+ 
+version = "1.0"
+ 
+repositories {
+ 
+mavenCentral() //repositories for downloading your dependencies
+ 
+}
+ 
+//dependencies for hadoop application
+ 
+dependencies {
+ 
+compile group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: '2.7.1'
+ 
+}
+ 
+dependencies {
+ 
+compile group: 'org.apache.hadoop', name: 'hadoop-common', version: '2.7.1'
+ 
+}
+ 
+jar {
+ 
+from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+ 
+}
+ 
+ext.hadoopVersion = "2.7.1"
+ 
+//eclipse plugin
+ 
+apply plugin: "eclipse"
+ 
+eclipse {
+ 
+// Ensure Eclipse build output appears in build directory
+ 
+classpath {
+ 
+defaultOutputDir = file("${buildDir}/eclipse-classes")
+ 
+}
+ 
+}
